@@ -1173,7 +1173,7 @@ write_file(LPCWSTR appdata_path)
     if (ini_read_int("General", "DisDedicate", ini_portable_path, true) == 0)
     {
         WCHAR cmp_ini[MAX_PATH] = { 0 };
-        if (get_profile_path(moz_profile, MAX_BUFF, appdt, handle))
+        if (get_profile_path(moz_profile, MAX_BUFF, appdt, (const ini_cache *)handle))
         {
             if (wnsprintfW(cmp_ini, MAX_PATH, L"%s", moz_profile) > 0 && PathAppendW(cmp_ini, L"compatibility.ini"))
             {
