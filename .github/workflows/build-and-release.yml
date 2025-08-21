@@ -23,7 +23,6 @@ jobs:
 
     - name: Build
       run: |
-        cd src
         nmake -f Makefile.msvc
 
     - name: Upload artifact
