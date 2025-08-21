@@ -107,10 +107,14 @@ setenv_tt(void)
                 crt_setenv(plugin_str);
                 free(val_str);
             }
-            if (inicache_read_int("General", "Portable", &plist) > 0)
+            if (get_file_version() >= 670 && inicache_read_int("General", "DisDedicate", &plist) > 0)
             {
-                WCHAR env_appdt[MAX_BUFF] =  {0};
-                WCHAR env_localdt[MAX_BUFF] =  {0};
+                crt_setenv(L"SNAP_NAME=1");
+            }
+            else if (inicache_read_int("General", "Portable", &plist) > 0)
+            {
+                WCHAR env_appdt[MAX_BUFF] = { 0 };
+                WCHAR env_localdt[MAX_BUFF] = { 0 };
                 if (get_file_version() > 131 && _wgetenv(L"XRE_PROFILE_PATH") == NULL && !cmd_has_setup())
                 {
                     if (*xre_profile_path)
@@ -121,14 +125,14 @@ setenv_tt(void)
                     {
                         _snwprintf(env_localdt, MAX_BUFF, L"XRE_PROFILE_LOCAL_PATH=%s", xre_profile_local_path);
                     }
-                    if (env_appdt[0])
+                    if (env_appdt)
                     {
                         crt_setenv(env_appdt);
                     #ifdef _LOGDEBUG
                         logmsg("we setup XRE_PROFILE_PATH\n");
                     #endif
                     }
-                    if (env_localdt[0])
+                    if (env_localdt)
                     {
                         crt_setenv(env_localdt);
                     }

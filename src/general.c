@@ -1170,6 +1170,18 @@ write_file(LPCWSTR appdata_path)
     #endif
         return ret;
     }
+    if (ini_read_int("General", "DisDedicate", ini_portable_path, true) == 0)
+    {
+        WCHAR cmp_ini[MAX_PATH] = { 0 };
+        if (get_profile_path(moz_profile, MAX_BUFF, appdt, handle))
+        {
+            if (wnsprintfW(cmp_ini, MAX_PATH, L"%s", moz_profile) > 0 && PathAppendW(cmp_ini, L"compatibility.ini"))
+            {
+                DeleteFileW(cmp_ini);
+            }
+        }
+        return ret;
+    }
     if (!WideCharToMultiByte(CP_UTF8, 0, appdata_path, -1, appdt, MAX_BUFF, NULL, NULL))
     {
         return ret;
