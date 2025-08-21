@@ -18,6 +18,9 @@ jobs:
     - name: Add MSBuild to PATH
       uses: microsoft/setup-msbuild@v1.1
 
+    - name: Setup Visual Studio environment
+      uses: ilammy/msvc-dev-cmd@v1
+
     - name: Build
       run: |
         cd src
